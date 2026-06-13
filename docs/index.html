@@ -3,42 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CryptoTrack - Cryptocurrency Tracker</title>
+    <title>CryptoTrack - Modern Cryptocurrency Dashboard</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand">CryptoTrack</div>
-            <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#market">Market</a>
-                <a href="#portfolio">Portfolio</a>
-                <a href="signin.html">Sign In</a>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon">₿</div>
+                <span>CryptoTrack</span>
             </div>
-        </div>
-    </nav>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-section="dashboard">
+                    <span class="nav-icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-section="wallet">
+                    <span class="nav-icon">💰</span>
+                    <span>Wallet</span>
+                </a>
+                <a href="#" class="nav-item" data-section="trade">
+                    <span class="nav-icon">📈</span>
+                    <span>Trade</span>
+                </a>
+                <a href="#" class="nav-item" data-section="notifications">
+                    <span class="nav-icon">🔔</span>
+                    <span>Notifications</span>
+                </a>
+                <a href="#" class="nav-item" data-section="settings">
+                    <span class="nav-icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+            </nav>
 
-    <section class="hero">
-        <div class="container">
-            <h1>Track Your Crypto Portfolio</h1>
-            <p>Real-time cryptocurrency prices and portfolio management</p>
-            <button class="btn btn-primary">Get Started</button>
-        </div>
-    </section>
-
-    <section class="crypto-list">
-        <div class="container">
-            <h2>Top Cryptocurrencies</h2>
-            <div id="crypto-container" class="grid">
-                <!-- Crypto cards will be loaded here -->
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">Sign Out</button>
             </div>
-        </div>
-    </section>
+        </aside>
 
-    <footer>
-        <p>&copy; 2024 CryptoTrack. All rights reserved.</p>
-    </footer>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Navigation -->
+            <header class="top-nav">
+                <div class="nav-left">
+                    <h1>Dashboard</h1>
+                </div>
+                <div class="nav-right">
+                    <div class="user-profile">
+                        <div class="profile-avatar">DP</div>
+                        <span class="profile-name">Darsh Patel</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Dashboard Section -->
+            <section id="dashboard-section" class="dashboard-section active">
+                <!-- Portfolio Overview -->
+                <div class="portfolio-overview">
+                    <h2>Portfolio Overview</h2>
+                    <div class="portfolio-cards">
+                        <div class="stat-card">
+                            <div class="stat-label">Total Balance</div>
+                            <div class="stat-value">$45,230.50</div>
+                            <div class="stat-change positive">+12.5%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Income</div>
+                            <div class="stat-value" style="color: #10b981;">$5,430.00</div>
+                            <div class="stat-change positive">+8.2%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-label">Expenses</div>
+                            <div class="stat-value" style="color: #ef4444;">$2,150.00</div>
+                            <div class="stat-change negative">-3.1%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Market Dashboard -->
+                <div class="market-dashboard">
+                    <h2>Market Dashboard</h2>
+                    <div class="crypto-cards-grid">
+                        <div class="crypto-card">
+                            <div class="crypto-header">
+                                <div class="crypto-info">
+                                    <h3>Bitcoin</h3>
+                                    <span class="crypto-symbol">BTC</span>
+                                </div>
+                                <div class="crypto-price">
+                                    <div class="price">$45,230</div>
+                                    <div class="change positive">+2.5%</div>
+                                </div>
+                            </div>
+                            <canvas id="chart-btc" class="crypto-chart"></canvas>
+                        </div>
+
+                        <div class="crypto-card">
+                            <div class="crypto-header">
+                                <div class="crypto-info">
+                                    <h3>Ethereum</h3>
+                                    <span class="crypto-symbol">ETH</span>
+                                </div>
+                                <div class="crypto-price">
+                                    <div class="price">$2,450</div>
+                                    <div class="change negative">-1.2%</div>
+                                </div>
+                            </div>
+                            <canvas id="chart-eth" class="crypto-chart"></canvas>
+                        </div>
+
+                        <div class="crypto-card">
+                            <div class="crypto-header">
+                                <div class="crypto-info">
+                                    <h3>Nitecoin</h3>
+                                    <span class="crypto-symbol">NTC</span>
+                                </div>
+                                <div class="crypto-price">
+                                    <div class="price">$128.45</div>
+                                    <div class="change positive">+5.8%</div>
+                                </div>
+                            </div>
+                            <canvas id="chart-ntc" class="crypto-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Exchange Panel -->
+                <div class="exchange-panel">
+                    <h2>Quick Exchange</h2>
+                    <div class="exchange-container">
+                        <div class="exchange-form">
+                            <div class="exchange-input-group">
+                                <label>From</label>
+                                <div class="input-wrapper">
+                                    <input type="number" id="from-amount" placeholder="0.00" value="1">
+                                    <select id="from-currency">
+                                        <option value="NTC">NTC</option>
+                                        <option value="BTC">BTC</option>
+                                        <option value="ETH">ETH</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button class="exchange-swap-btn">⇄</button>
+
+                            <div class="exchange-input-group">
+                                <label>To</label>
+                                <div class="input-wrapper">
+                                    <input type="number" id="to-amount" placeholder="0.00" readonly>
+                                    <select id="to-currency">
+                                        <option value="AUD">AUD</option>
+                                        <option value="USD">USD</option>
+                                        <option value="EUR">EUR</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="exchange-btn" onclick="performExchange()">Exchange</button>
+                    </div>
+                </div>
+
+                <!-- AI Assistant -->
+                <div class="ai-assistant-panel">
+                    <h2>AI Assistant</h2>
+                    <div class="ai-chat">
+                        <div class="ai-messages" id="ai-messages">
+                            <div class="ai-message bot">
+                                <div class="message-content">Hello! I'm your CryptoTrack AI Assistant. How can I help you today? Ask me about market trends, portfolio optimization, or trading strategies!</div>
+                            </div>
+                        </div>
+                        <div class="ai-input-area">
+                            <input type="text" id="ai-input" placeholder="Ask me anything about crypto..." onkeypress="handleAIInput(event)">
+                            <button onclick="sendAIMessage()">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Other Sections (Placeholder) -->
+            <section id="wallet-section" class="section-placeholder">
+                <h2>Wallet</h2>
+                <p>Wallet management features coming soon...</p>
+            </section>
+
+            <section id="trade-section" class="section-placeholder">
+                <h2>Trade</h2>
+                <p>Advanced trading tools coming soon...</p>
+            </section>
+
+            <section id="notifications-section" class="section-placeholder">
+                <h2>Notifications</h2>
+                <p>Your notifications will appear here...</p>
+            </section>
+
+            <section id="settings-section" class="section-placeholder">
+                <h2>Settings</h2>
+                <p>Settings and preferences coming soon...</p>
+            </section>
+        </main>
+    </div>
 
     <script src="app.js"></script>
 </body>
